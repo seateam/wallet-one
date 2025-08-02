@@ -1,7 +1,7 @@
 {
-  "name": "Most.Box",
-  "short_name": "Most.Box",
-  "description": "Most.Box Application",
+  "name": "OneBerry",
+  "short_name": "OneBerry",
+  "description": "OneBerry Application",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

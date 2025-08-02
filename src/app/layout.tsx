@@ -17,13 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Most.Box",
-  description: "为全人类彻底解放奋斗终身",
+  title: "OneBerry",
+  description: "A Web3 Toolkit for Web3 Developers",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Most.Box",
+    title: "OneBerry",
   },
   icons: {
     apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
