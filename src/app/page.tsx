@@ -44,6 +44,27 @@ export default function Web3ToolPage() {
   const [deriveShowIndex, setDeriveShowIndex] = useState(true);
   const [deriveShowAddress, setDeriveShowAddress] = useState(true);
   const [deriveShowPrivateKey, setDeriveShowPrivateKey] = useState(false);
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => document.removeEventListener("contextmenu", handleContextMenu);
+  }, []);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        e.key === "F12" || // 开发者工具
+        e.key === "F2" || // 你指定的功能键
+        (e.ctrlKey && e.shiftKey && e.key === "I") || // Ctrl+Shift+I
+        (e.ctrlKey && e.shiftKey && e.key === "J") || // Ctrl+Shift+J
+        (e.ctrlKey && e.key === "U") // 查看源代码
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   // 验证助记词的函数
   const validateMnemonic = (mnemonicText: string) => {
